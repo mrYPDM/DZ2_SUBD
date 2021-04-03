@@ -1,5 +1,5 @@
-﻿#include "Database.h"
-#include "Global.h"
+﻿#include "include/Database.h"
+#include "include/Global.h"
 
 string Join(vector<string> vec, int st, int en)
 {

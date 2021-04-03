@@ -1,4 +1,4 @@
-#include "ClothesWarehouse.h"
+#include "../include/ClothesWarehouse.h"
 
 ClothesWarehouse::ClothesWarehouse(string title, string city, int capacity) : Warehouse(title, city, capacity)
 {
