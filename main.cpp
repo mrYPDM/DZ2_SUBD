@@ -1,17 +1,5 @@
 ﻿#include "include/Database.h"
 #include "include/Global.h"
-
-string Join(vector<string> vec, int st, int en)
-{
-	string str = "";
-	for (int i = st; i < en; i++)
-	{
-		str += vec[i] + " ";
-	}
-	str.erase(str.end() - 1);
-	return str;
-}
-
 /*
 * Создание: однотипные и гибридные +
 * Вывод списка БД +
@@ -80,7 +68,7 @@ void SUBD()
 	while (true)
 	{
 		// Выводим зеленым цветом
-		cout << "\x1B[32m" << "sbud@" + (currentDatabase == nullptr ? "null" : currentDatabase->GetTitle()) + ": " << "\033[0m";
+		cout << "\x1B[32m" << "subd@" + (currentDatabase == nullptr ? "null" : currentDatabase->GetTitle()) + ": " << "\033[0m";
 		getline(cin, str);
 		auto data = Split(str);
 		if (data.size() == 0)
@@ -139,6 +127,12 @@ void SUBD()
 					newItem = new ShoesWarehouse(data[1], data[2], stoi(data[3]));
 				}
 				currentDatabase->AddItem(newItem);
+			}
+			// erase <title>
+			else if (data[0] == "erase" && data.size() == 2)
+			{
+				if (currentDatabase != nullptr)
+					currentDatabase->RemoveItem(data[1]);
 			}
 			// print - print DatabaseItems
 			// print <name> - print Stuff of Warehouse;
@@ -208,7 +202,7 @@ void SUBD()
 			{
 				Warehouse* item = currentDatabase->FindByName(data[1]);
 				if (item != nullptr)
-					SUBDI("sbud@" + currentDatabase->GetTitle() + "@" + item->GetTitle() + ": ", item);
+					SUBDI("subd@" + currentDatabase->GetTitle() + "@" + item->GetTitle() + ": ", item);
 				else
 					throw "Can not find warehouse";
 			}
@@ -236,14 +230,14 @@ void SUBD()
 			else if (data[0] == "rename")
 			{
 				// Если пытаемся сохранить БД, которой нет
-				if (currentDatabase == nullptr && data.size() == 1)
+				if (currentDatabase == nullptr && data.size() == 2)
 					throw "There is not opened database";
 				// Добавляем имя текущей БД, чтобы привести все к формату rename <title> <new title>, чтобы не повторять код
-				if (currentDatabase != nullptr && data.size() == 1)
+				if (currentDatabase != nullptr && data.size() == 2)
 					data.insert(data.begin() + 1, currentDatabase->GetTitle());
 				fs::rename(fs::current_path().string() + "\\" + data[1] + ".db", fs::current_path().string() + "\\" + data[2] + ".db");
 				if (currentDatabase != nullptr && data[1] == currentDatabase->GetTitle())
-					currentDatabase->SetTitle(data[3]);
+					currentDatabase->SetTitle(data[2]);
 			}
 			// remove
 			// remove <name>
@@ -344,7 +338,7 @@ void SUBDI(string placeholder, Warehouse* currentItem)
 				// Так как Clothes и Shoes наследники Warehouse, а AddStuff абстрактная и аргументы к разным классам различны, приходится передавать вектор
 				currentItem->AddStuff(vector<string>(data.begin() + 1, data.end()));
 			}
-			// remove <type> <size1> <size2> <count>
+			// remove <type> <size1> <size2> <count|all>
 			// remove <type> <size> <count|all>
 			else if (data[0] == "remove")
 			{

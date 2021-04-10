@@ -100,10 +100,8 @@ void Database::Sort(string param, bool isDescending)
 
 Warehouse* Database::FindByName(string name)
 {
-	for (auto it : MainVector)
-		if (it->GetTitle() == name)
-			return it;
-	return nullptr;
+	auto it = std::find_if(MainVector.begin(), MainVector.end(), [=](Warehouse* item) { return item->GetTitle() == name; });
+	return (it == MainVector.end() ? nullptr : *it);
 }
 
 vector<Warehouse*> Database::GroupByCity(string city)
@@ -167,11 +165,6 @@ void Database::Print()
 		cout << "\nItems:\n\n";
 	for (int i = 0; i < MainVector.size(); i++)
 	{
-		/*cout
-			<< "Title: " << MainVector[i]->GetTitle() << endl
-			<< "City: " << MainVector[i]->GetCity() << endl
-			<< "Capacity: " << MainVector[i]->GetCapacity() << endl
-			<< "Stuff count: " << MainVector[i]->GetSize() << "\n\n";*/
 		MainVector[i]->Print();
 	}
 }
