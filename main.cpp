@@ -279,16 +279,18 @@ void SUBD()
 			else if (data[0] == "help")
 			{
 			cout
-				<< "exit\n" << "clear\n" << "close\n"
+				<< "exit\n" << "clear\n" << "close\n" << "help\n"
 				<< "create <title> <hybrid|shoes|clothes>\n"
 				<< "open <title>\n"
 				<< "show\n" << "print\n" << "print <name>\n"
 				<< "add <title> <city> <capacity>\n"
 				<< "add <shoe|clothe> <title> <city> <capacity>\n"
-				<< "remov\n"
+				<< "erase <title>\n"
+				<< "remove\n"
 				<< "remove <title>\n"
 				<< "get <name>\n"
 				<< "save\n"
+				<< "save <title>\n"
 				<< "sort by <title|capacity>\n"
 				<< "sort by des <title|capacity>\n"
 				<< "group by <city|size> <city name|size type>\n"
@@ -365,6 +367,7 @@ void SUBDI(string placeholder, Warehouse* currentItem)
 				cout
 					<< "exit\n"
 					<< "clear\n"
+					<< "help\n"
 					<< "add <type> <size1> <size2> <count> - for clothes\n"
 					<< "remove <type> <size1> <size2> <count> - for clothes\n"
 					<< "add <type> <size> <count> - for shoes\n"
