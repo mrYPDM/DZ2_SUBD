@@ -51,6 +51,9 @@ void ClothesWarehouse::RemoveStuff(vector<string> data)
 	pair<int, int> size(stoi(data[1]), stoi(data[2]));
 	int count = (data[3] == "all" ? Stuff[size][type] : stoi(data[3])); // Можно передать вместо кол-ва all, удалив все вещи
 
+	if (Stuff.find(size) == Stuff.end())
+		throw "There are not such things";
+
 	if (Stuff[size][type] - count < 0)
 		throw "There are not so many things";
 	Stuff[size][type] -= count;

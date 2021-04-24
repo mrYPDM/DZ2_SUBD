@@ -46,8 +46,12 @@ void ShoesWarehouse::RemoveStuff(vector<string> data)
 {
 	string type = data[0]; int size = stoi(data[1]), count = (data[2] == "all" ? Stuff[size][type] : stoi(data[2]));
 
+	if (Stuff.find(size) == Stuff.end())
+		throw "There are not such things";
+
 	if (Stuff[size][type] - count < 0)
 		throw "There are not so many things";
+
 	Stuff[size][type] -= count;
 	Size -= count;
 	if (Stuff[size][type] == 0)
