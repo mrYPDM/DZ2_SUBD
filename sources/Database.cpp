@@ -146,10 +146,10 @@ void Database::RemoveItem(string name)
 	delete it;
 }
 
-string Database::ToString()
+string Database::ToString(string title)
 {
 	stringstream ss;
-	ss << Title << endl << Hybrid << endl;
+	ss << title << endl << Hybrid << endl;
 	for (auto item : MainVector)
 	{
 		ss << "###" << endl << item->ToString();
@@ -172,6 +172,6 @@ void Database::Print()
 void Database::SaveToFile(string title)
 {
 	ofstream output((title == "\0" ? Title : title) + ".db");
-	output << ToString();
+	output << ToString((title == "\0" ? Title : title));
 	output.close();
 }

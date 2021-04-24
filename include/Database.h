@@ -30,7 +30,7 @@ public:
 
 	~Database();
 
-	string ToString();
+	string ToString(string title);
 
 	string GetTitle();
 

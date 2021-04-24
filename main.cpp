@@ -235,7 +235,15 @@ void SUBD()
 				// Добавляем имя текущей БД, чтобы привести все к формату rename <title> <new title>, чтобы не повторять код
 				if (currentDatabase != nullptr && data.size() == 2)
 					data.insert(data.begin() + 1, currentDatabase->GetTitle());
+				// Переименовываем файл
 				fs::rename(fs::current_path().string() + "\\" + data[1] + ".db", fs::current_path().string() + "\\" + data[2] + ".db");
+				// Переименовываем БД в этом файле
+				{
+					Database* buf = new Database(fs::current_path().string() + "\\" + data[2] + ".db");
+					buf->SetTitle(data[2]);
+					buf->SaveToFile();
+					delete buf;
+				}
 				if (currentDatabase != nullptr && data[1] == currentDatabase->GetTitle())
 					currentDatabase->SetTitle(data[2]);
 			}
